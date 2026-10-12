@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preditor Aviator - Elefante Bet Angola</title>
+    <style>
+        :root {
+            --primary: #e91e63; /* Rosa/Roxo estilo Aviator */
+            --bg-dark: #121212;
+            --card-bg: #1e1e1e;
+            --text-light: #ffffff;
+            --accent: #ff4081;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(233, 30, 99, 0.3);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            border: 1px solid #333;
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 2rem;
+        }
+
+        .prediction-box {
+            background: #000;
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .multiplier {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: var(--text-light);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .loading {
+            font-size: 1rem;
+            color: #aaa;
+            animation: pulse 1s infinite;
+        }
+
+        button {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            border: none;
+            padding: 15px 30px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            text-transform: uppercase;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+
+        .status {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: #4caf50;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        .footer {
+            margin-top: 2rem;
+            font-size: 0.75rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Aviator Predictor</h1>
+        <p class="subtitle">Elefante Bet Angola v2.0</p>
+
+        <div class="prediction-box" id="displayBox">
+            <span id="resultText" class="multiplier">--.--x</span>
+        </div>
+
+        <button id="predictBtn" onclick="generateSignal()">Gerar Sinal</button>
+        
+        <p class="status" id="statusMsg"></p>
+
+        <div class="footer">
+            *Baseado em algoritmo probabilístico simulado.<br>
+            Não garante 100% de acerto. Jogue com responsabilidade.
+        </div>
+    </div>
+
+    <script>
+        const btn = document.getElementById('predictBtn');
+        const resultText = document.getElementById('resultText');
+        const statusMsg = document.getElementById('statusMsg');
+
+        function generateSignal() {
+            // Desativa botão durante "análise"
+            btn.disabled = true;
+            btn.innerText = "Analisando...";
+            resultText.innerHTML = '<span class="loading">Calculando Hash...</span>';
+            statusMsg.innerText = "";
+
+            // Simula tempo de conexão com o servidor
+            setTimeout(() => {
+                // Algoritmo simples de probabilidade ponderada
+                // A maioria dos resultados no Aviator são baixos (1.20 a 2.00)
+                const rand = Math.random();
+                let prediction;
+
+                if (rand < 0.35) {
+                    // 35% de chance de ser baixo (1.20 - 1.50)
+                    prediction = (1.20 + Math.random() * 0.30).toFixed(2);
+                } else if (rand < 0.70) {
+                    // 35% de chance de ser médio (1.50 - 2.50)
+                    prediction = (1.50 + Math.random() * 1.00).toFixed(2);
+                } else if (rand < 0.90) {
+                    // 20% de chance de ser alto (2.50 - 5.00)
+                    prediction = (2.50 + Math.random() * 2.50).toFixed(2);
+                } else {
+                    // 10% de chance de ser "Jackpot" (acima de 5.00)
+                    prediction = (5.00 + Math.random() * 10.00).toFixed(2);
+                }
+
+                // Efeito visual de atualização
+                resultText.innerHTML = `${prediction}x`;
+                resultText.style.color = getMultiplierColor(prediction);
+                
+                statusMsg.innerText = "Sinal confirmado pelo servidor.";
+                btn.disabled = false;
+                btn.innerText = "Gerar Próximo Sinal";
+
+            }, 1500); // 1.5 segundos de delay
+        }
+
+        function getMultiplier(val) {
+            return parseFloat(val);
+        }
+
+        function getMultiplierColor(val) {
+            const num = parseFloat(val);
+            if (num >= 5.0) return '#ff4081'; // Rosa forte
+            if (num >= 2.0) return '#e91e63'; // Vermelho/Rosa
+            return '#ffffff'; // Branco para valores baixos
+        }
+    </script>
+
+</body>
+</html> 
